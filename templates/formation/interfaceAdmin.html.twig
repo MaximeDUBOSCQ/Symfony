@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<br><br>
+<div align="right">
+<a type="button" class="btn btn-warning btn-sm" href="{{path('app_deconnexion')}}">Se deconnecter</a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div align="center">
+                <h1>Liste des inscriptions </h1>
+            </div>
+            <br>
+            {% if(messageInscription) %}
+            {{messageInscription}}
+            {% endif %}
+            {% for inscription in lesInscriptions %}
+            <div class="card">
+                <div class="card-body">
+                <center>
+                <h5 class="card-title">Formation <strong>{{inscription.laFormation.leProduit.libelle}} </strong></h5>
+                <h6 class="card-subtitle mb-2 text-muted"> {{inscription.laFormation.dateDebut|date("m/d/Y")}}</h6><br>
+                </center>
+                    <b>Nom : </b>{{inscription.leEmploye.nom}}<br>
+                    <b>Prénom : </b>{{inscription.leEmploye.prenom}}<br>
+                    <b>Statut : </b>
+                    {% if(inscription.statut == 'En cours') %}
+                        <strong class="text-body">{{inscription.statut}}</strong><br>
+                    {% endif %}
+                    {% if(inscription.statut == 'Refuser') %}
+                        <strong class="text-danger">{{inscription.statut}}</strong><br>
+                    {% endif %}
+                    {% if(inscription.statut == 'Accepter') %}
+                        <strong class="text-success">{{inscription.statut}}</strong><br>
+                    {% endif %}
+                    {% if(inscription.statut == 'En cours') %}
+                    <br>
+                    <a type="button" class="btn btn-success btn-sm" href="{{path('app_accepter_une_formation', {'id' : inscription.id})}}">Accepter</a>&nbsp;&nbsp;&nbsp;&nbsp;  
+                    <a type="button" class="btn btn-danger btn-sm" href="{{path('app_refuser_une_formation', {'id' : inscription.id})}}">Refuser</a><br/>
+                    {% endif %}
+                    <br>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+        <div class="col">
+        <h1>Liste des formations : </h1><br>
+        <a type="button" class="btn btn-info btn-sm" href="{{path('app_creer_formation')}}">Ajouter une formation</a><br><br>
+        {% if(messageFormation) %}
+            {{messageFormation}}
+        {% endif %}
+        {% for formation in lesFormations %}
+        <div class="card">
+            <div class="card-body">
+            <center>
+                <h5 class="card-title">Formation <strong> {{formation.leProduit.libelle}} </strong></h5>
+                <h6 class="card-subtitle mb-2 text-muted"> {{formation.dateDebut|date("d/m/Y")}}</h6><br>
+                </center>
+                <b>Nombre d'heures : </b>{{formation.nbreHeures}}<br>
+                <b>Département : </b>{{formation.departement}}<br><br>
+                <a type="button" class="btn btn-danger btn-sm" href ="{{path('app_supprimer_une_formation', {'id' : formation.id})}}">Supprimer</a></br>
+                <br>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

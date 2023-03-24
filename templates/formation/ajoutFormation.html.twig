@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'form_table_layout.html.twig' %}
+
+{% block body %}
+<br>
+<center>
+<h1>Ajout d'une formation </h1><br>
+
+    {{form(form)}}
+    <br/><br/>
+    <a type="button" class="btn btn-secondary" href="{{path('app_afficher_les_inscriptions_et_formations')}}">Retour</a>
+    </center>
+{% endblock %}
